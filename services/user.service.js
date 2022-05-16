@@ -1,5 +1,5 @@
 const commonService = require('./common.service')
-
+const logger = require('../config/logger.config')
 const DB = require('../database/models/index.model').sequelize.models.User
 
 class UserService {
@@ -10,16 +10,15 @@ class UserService {
         newUser['password'] = hash.hash;
         newUser["salt"] = hash.salt;
         newUser['latLoginAt'] = null
-
         // Using Promises like this versus async/await for easier error and logging 
         return new Promise((res, rej) => {
             return DB.create(newUser).then((user) => {
                 // Replace this with actual logging
-                console.log("User Auto-generated ID", user.id)
+                logger.info(`User Auto-generated ID: ${user.id}`)
                 return res(true)
             }).catch((err) => {
                 //Replace this with actual logging
-                console.log('User Service / Create User / Line 68', err)
+                logger.error(`User Service / Create User / Line 22: ${err}`)
                 return rej(err)
             })
         })
@@ -33,10 +32,10 @@ class UserService {
                     email
                 }
             }).then((user) => {
-                console.log(user)
+                logger.info(`Get User By Email Called: ${user}`)
                 return res(user)
             }).catch((err) => {
-                console.log('User Service / Get User By email/ Line 30', err)
+                logger.error(`User Service / Get User By Email / Line 39: ${err}`)
                 return rej(err)
             })
         })
