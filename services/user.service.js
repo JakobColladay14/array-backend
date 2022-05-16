@@ -1,6 +1,6 @@
 const commonService = require('./common.service')
 const logger = require('../config/logger.config')
-const DB = require('../database/models/index.model').sequelize.models.User
+const DB = require('../database/models/index.model').sequelize.models.user
 
 class UserService {
     async createUser(user) {

@@ -1,10 +1,11 @@
 module.exports = {
     development: {
         database: 'array',
-        username: 'root',
-        password: '92629', 
+        username: 'user',
+        password: 'db_password', 
         config: {
-            host: 'localhost',
+            host: 'db',
+            port: 3306,
             dialect: 'mysql',
             pool: {
                 max: 10,
