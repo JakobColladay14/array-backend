@@ -54,7 +54,7 @@ class AuthController {
     }
 
     async checkingAuth(req, res) {
-        return 'no'
+        return res.json({code: 200, msg: "Sucessfull made it past the authentication"})
     }
 }
 module.exports = new AuthController()
