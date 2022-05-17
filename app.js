@@ -1,8 +1,7 @@
-var express = require('express')
-var path = require('path')
-var config = require('./config/app.config')
-var app = express()
-const mysql = require('mysql2')
+let express = require('express')
+let path = require('path')
+let config = require('./config/app.config')
+let app = express()
 
 
 app.use(express.json())

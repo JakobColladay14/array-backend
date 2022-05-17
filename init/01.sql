@@ -6,7 +6,6 @@ CREATE TABLE users (
     email varchar(255),
     password varchar(255),
     salt varchar(255),
-    lastLoginAt date,
     createdAt date,
     updatedAt date
 );

@@ -1,3 +1,4 @@
+const {login, logout, isLoggedIn} = require('../middleware/user.map.service')
 const commonService = require('../services/common.service')
 const userService = require('../services/user.service')
 
@@ -40,6 +41,11 @@ class AuthController {
             return res.json({ code: 401, user: null})
         }
 
+        //Checks if the user is already logged in
+        if (isLoggedIn(user.id)) {
+            return res.json({ code: 401, msg: "User is already logged in"})
+        }
+
         // compare user hash to password
         let didLoginSucceed = await commonService.chechkHash(password, user.password);
 
@@ -47,14 +53,23 @@ class AuthController {
             return res.json({ code: 401, user: null})
         }
 
-        //Generate a token
-        let token = commonService.generateToken(email)
-        
-        return res.json({ code: 200, user: user, token: token})
+        //Add user to the user map keeping track of who is logged in
+        await login(user.id)
+
+        return res.json({ code: 200, user: user})
     }
 
-    async checkingAuth(req, res) {
-        return res.json({code: 200, msg: "Sucessfull made it past the authentication"})
+    async logout(req, res) {
+        let userId = req.body.id
+
+        let didLogout = await logout(userId)
+        
+        if (!didLogout) {
+            return res.json({code: 401, msg: "This user is not logged in"})    
+        }
+
+        return res.json({code: 200, msg: 'Successfully logged out'})
     }
+
 }
 module.exports = new AuthController()
