@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const config = require('../config/app.config')
 
 class CommonService {
@@ -20,14 +19,6 @@ class CommonService {
         return bcrypt.compareSync(pw, hash)
     }
 
-    generateToken(email) {
-        let token = jwt.sign({email: email},
-            config.jwtSecret,
-            { expiresIn: '24h'}
-        );
-
-        return token
-    }
 
     validateEmail(email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
